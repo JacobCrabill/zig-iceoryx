@@ -189,6 +189,36 @@ pub fn build(b: *std.Build) void {
     });
 
     b.installArtifact(iceoryx_posh);
+
+    // -------------------------------------------------------------------------
+    // iceoryx_binding_c
+    const iceoryx_binding_c = b.addLibrary(.{
+        .name = "iceoryx_binding_c",
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            .pic = true,
+            .link_libc = true,
+            .link_libcpp = true,
+        }),
+        .linkage = linkage,
+    });
+    iceoryx_binding_c.addConfigHeader(version_config);
+    iceoryx_binding_c.addConfigHeader(platform_config);
+    iceoryx_binding_c.addConfigHeader(hoofs_deploy_config);
+    iceoryx_binding_c.addConfigHeader(posh_deploy_config);
+
+    for (all_include_dirs) |dir| {
+        iceoryx_binding_c.addIncludePath(iceoryx.path(dir));
+    }
+
+    iceoryx_binding_c.addCSourceFiles(.{
+        .root = iceoryx.path("."),
+        .files = binding_c_files,
+        .flags = std_cxx_flags,
+    });
+
+    b.installArtifact(iceoryx_binding_c);
 }
 
 const examples_files: []const []const u8 = &.{
