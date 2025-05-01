@@ -493,7 +493,6 @@ const hoofs_files: []const []const u8 = &.{
 
 const all_include_dirs: []const []const u8 = &.{
     "tools/introspection/include",
-    "iceoryx_platform/unix/include",
     "iceoryx_platform/linux/include",
     "iceoryx_platform/generic/include",
     "iceoryx_binding_c/include",

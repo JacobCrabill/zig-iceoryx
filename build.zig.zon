@@ -6,10 +6,9 @@
     .dependencies = .{
         .iceoryx = .{
             // v2.95.4 with bugfix
-            //.url = "https://github.com/eclipse-iceoryx/iceoryx/archive/tags/v2.95.4.tar.gz",
-            //.hash = "N-V-__8AAEkYlQCS8g0gzX9KOGzzU1w679hSjiDDosWjWNxM",
-            .url = "https://github.com/JacobCrabill/iceoryx/archive/02c7147b3fc84006a1837ed342a114c92d7c4dfa.tar.gz",
-            .hash = "N-V-__8AAFUYlQAMOjf5EToarg8VuE08yOblU1XNi5ImlrjP",
+            //.url = "https://github.com/JacobCrabill/iceoryx/archive/02c7147b3fc84006a1837ed342a114c92d7c4dfa.tar.gz",
+            //.hash = "N-V-__8AAFUYlQAMOjf5EToarg8VuE08yOblU1XNi5ImlrjP",
+            .path = "../iceoryx",
         },
         .cpptoml = .{
             .url = "https://github.com/skystrife/cpptoml/archive/tags/v0.1.1.tar.gz",
