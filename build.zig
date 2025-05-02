@@ -230,6 +230,36 @@ pub fn build(b: *std.Build) void {
             .include_extensions = &.{ ".h", ".hpp" },
         });
     }
+
+    // -------------------------------------------------------------------------
+    // Iceoryx RouDi (Routing and Discovery) Executable
+    const roudi = b.addExecutable(.{
+        .name = "iox-roudi",
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            .link_libc = true,
+            .link_libcpp = true,
+            .pic = true,
+        }),
+    });
+    roudi.addCSourceFile(.{
+        .file = iceoryx.path("iceoryx_posh/source/roudi/application/roudi_main.cpp"),
+        .flags = std_cxx_flags,
+    });
+    roudi.linkLibrary(iceoryx_hoofs);
+    roudi.linkLibrary(iceoryx_posh);
+
+    // TODO: Need to clean up the includes everywhere
+    for (all_include_dirs) |dir| {
+        roudi.addIncludePath(iceoryx.path(dir));
+    }
+    roudi.addConfigHeader(version_config);
+    roudi.addConfigHeader(platform_config);
+    roudi.addConfigHeader(hoofs_deploy_config);
+    roudi.addConfigHeader(posh_deploy_config);
+
+    b.installArtifact(roudi);
 }
 
 const examples_files: []const []const u8 = &.{
@@ -476,8 +506,6 @@ const posh_files: []const []const u8 = &.{
     "iceoryx_posh/source/gateway/gateway_config.cpp",
     "iceoryx_posh/source/gateway/toml_gateway_config_parser.cpp",
     "iceoryx_posh/source/roudi/roudi_config_toml_file_provider.cpp",
-    // iox-roudi executable
-    //"iceoryx_posh/source/roudi/application/roudi_main.cpp",
 };
 
 const hoofs_files: []const []const u8 = &.{
