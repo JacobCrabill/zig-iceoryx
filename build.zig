@@ -219,6 +219,14 @@ pub fn build(b: *std.Build) void {
     });
 
     b.installArtifact(iceoryx_binding_c);
+
+    // -------------------------------------------------------------------------
+    // Install all header files
+    for (all_include_dirs) |dir| {
+        iceoryx_binding_c.installHeadersDirectory(iceoryx.path(dir), "", .{
+            .include_extensions = &.{ ".h", ".hpp" },
+        });
+    }
 }
 
 const examples_files: []const []const u8 = &.{
