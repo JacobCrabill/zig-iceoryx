@@ -14,6 +14,7 @@ pub fn build(b: *std.Build) void {
 
     const std_cxx_flags: []const []const u8 = &.{
         "--std=c++17",
+        "-pthread",
         "-W",
         "-Wall",
         "-Wextra",
@@ -233,15 +234,21 @@ pub fn build(b: *std.Build) void {
 
     // -------------------------------------------------------------------------
     // Iceoryx RouDi (Routing and Discovery) Executable
+    // Note that MUSL does *not* provide all necessary pthread symbols, so we MUST use GNU
+    var rudi_target: std.Build.ResolvedTarget = target;
+    rudi_target.query.abi = .gnu;
+
     const roudi = b.addExecutable(.{
         .name = "iox-roudi",
         .root_module = b.createModule(.{
-            .target = target,
+            .target = rudi_target,
             .optimize = optimize,
             .link_libc = true,
             .link_libcpp = true,
             .pic = true,
         }),
+        .link_libc = true,
+        //.linkage = linkage,
     });
     roudi.addCSourceFile(.{
         .file = iceoryx.path("iceoryx_posh/source/roudi/application/roudi_main.cpp"),
