@@ -1,6 +1,6 @@
 .{
     .name = .zig_iceoryx,
-    .version = "0.0.0",
+    .version = "2.95.4",
     .fingerprint = 0xbb737503b6e05b1d,
     .minimum_zig_version = "0.14.0",
     .dependencies = .{
