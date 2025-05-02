@@ -218,6 +218,9 @@ pub fn build(b: *std.Build) void {
         .flags = std_cxx_flags,
     });
 
+    iceoryx_binding_c.linkLibrary(iceoryx_hoofs);
+    iceoryx_binding_c.linkLibrary(iceoryx_posh);
+
     b.installArtifact(iceoryx_binding_c);
 
     // -------------------------------------------------------------------------
