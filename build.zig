@@ -247,8 +247,6 @@ pub fn build(b: *std.Build) void {
             .link_libcpp = true,
             .pic = true,
         }),
-        .link_libc = true,
-        //.linkage = linkage,
     });
     roudi.addCSourceFile(.{
         .file = iceoryx.path("iceoryx_posh/source/roudi/application/roudi_main.cpp"),
